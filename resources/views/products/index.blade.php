@@ -13,44 +13,42 @@
 <body>
     <nav class="navbar navbar-inverse bg-dark">
         <ul class="nav navbar-nav">
-          <li><a href="#">Products</a></li>
+            <li><a href="{{ url('products') }}">Products</a></li>
         </ul>
     </nav>
-<div class="container mt-3">
-    <div class="text-right">
-        <a href="{{url('products/create')  }}" class="btn btn-dark">New Products</a>
+    <div class="container mt-3">
+        <div class="text-right">
+            <a href="{{url('products/create')  }}" class="btn btn-dark">New Products</a>
+        </div>
+        <table class="table mt-2">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($products as $product )
+                <tr>
+                    <td>{{$loop->index+1}}</td>
+                    <td>{{$product->name}}</td>
+                    <td>
+                        <img src="{{ asset('public/products/' . $product->image) }}" class="rounded-circle" width="50px" height="50px"/>
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ route('products.edit', $product->id) }}" role="button">Edit</a>
+                        <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger" role="button">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-    <table class="table mt-2">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Image</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-
-            @foreach ($products as $product )
-            <tr>
-                <td>{{$loop->index+1}}</td>
-                <td>{{$product->name}}</td>
-                <td>
-                    <img src="{{ asset('public/products/' . $product->image) }}" class="rounded-circle" width="50px" height="50px"/>
-
-                </td>
-                <td>
-                    <a class="btn btn-primary" href="{{ route('products.edit', $product->id) }}" role="button">Edit</a>
-                    <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display: inline;">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger" role="button">Delete</button>
-           </form>
-                </td>
-          </tr>
-            @endforeach
-        </tbody>
-      </table>
-</div>
 </body>
 </html>

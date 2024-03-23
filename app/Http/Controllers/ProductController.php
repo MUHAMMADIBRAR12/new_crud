@@ -71,6 +71,7 @@ class ProductController extends Controller
         return back()->with('success', 'Product updated successfully!');
     }
         public function destroy($id){
+
         $product = Product::where('id',$id)->first();
         $product->delete();
 

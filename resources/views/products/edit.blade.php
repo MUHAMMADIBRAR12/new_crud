@@ -26,13 +26,12 @@
         <div class="col-sm-8">
             <div class="card mt-3 p-3">
                 <h3>Product edit #{{ $product->name }}</h3>
-             <form method="POST" action="{{ url('products/'.$product->id) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('products.update', ['id' => $product->id]) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
                     <label for="">Name</label>
-                    <input type="text" name="name" value=
-                    "{{ old('name',$product->name) }}"
+                    <input type="text" name="name" value="{{ old('name',$product->name) }}"
                      class="form-control"/>
                     @if ($errors->has('name'))
                       <span class="text-danger">{{ $errors->first('name') }}</span>
